@@ -63,14 +63,14 @@ def sidebar_input_features():
     key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "D", "E", "F", "G", "H", "A#", "B#", "C#", "D#", "E#", "F#", "G#"))
     mode = st.sidebar.selectbox("Mode", ("Minor", "Major"))
     
-    acousticness = st.sidebar.slider("acousticness", min_value=0, max_value=1, value=0.2, step=0.1)
-    danceability = st.sidebar.slider("danceability", min_value=0, max_value=1, value=0.2, step=0.1)
-    duration_ms = st.sidebar.slider("duration_ms", min_value=0, max_value=1, value=0.2, step=0.1)
-    energy = st.sidebar.slider("energy", min_value=0, max_value=1, value=0.2, step=0.1)
-    instrumentalness = st.sidebar.slider("instrumentalness", min_value=0, max_value=1, value=0.2, step=0.1)
-    liveness = st.sidebar.slider("liveness", min_value=0, max_value=1, value=0.2, step=0.1)
-    loudness = st.sidebar.slider("loudness", min_value=0, max_value=1, value=0.2, step=0.1)
-    tempo = st.sidebar.slider("tempo", min_value=0, max_value=1, value=0.2, step=0.1)
+    acousticness = st.sidebar.slider("acousticness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    danceability = st.sidebar.slider("danceability", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    duration_ms = st.sidebar.slider("duration_ms", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    energy = st.sidebar.slider("energy", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    instrumentalness = st.sidebar.slider("instrumentalness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    liveness = st.sidebar.slider("liveness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    loudness = st.sidebar.slider("loudness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    tempo = st.sidebar.slider("tempo", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
      
     data = {
         "key": key,
