@@ -78,12 +78,13 @@ def sidebar_input_features():
         "mode": mode,
         "acousticness": acousticness,
         "danceability": danceability,
-        "duration_ms": duration_ms,
+        #"duration_ms": duration_ms,
         "energy": energy,
         "instrumentalness": instrumentalness,
         "liveness": liveness,
         "loudness": loudness,
-        "tempo": tempo
+        "tempo": tempo,
+        "speechiness": speechiness
     }
 
     df = pd.DataFrame(data, index=[0])
