@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def split_data(df: pd.DataFrame):
-    y = df['music_genre']
+    y = df["music_genre"]
     X = df[["key", "mode", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "tempo", "speechiness"]]
 
     return X, y
@@ -13,7 +13,7 @@ def split_data(df: pd.DataFrame):
 
 def open_data(path="data/music_genre_train.csv"):
     df = pd.read_csv(path)
-    df = df[['music_genre', "key", "mode", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "tempo", "speechiness"]]
+    df = df[["key", "mode", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "tempo", "speechiness", "music_genre"]]
 
     return df
 
