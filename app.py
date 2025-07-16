@@ -10,20 +10,20 @@ def process_main_page():
 
 
 def show_main_page():
-    image = Image.open('data/titanic.jpg')
+    image = Image.open('data/music.jpg')
 
     st.set_page_config(
         layout="wide",
         initial_sidebar_state="auto",
-        page_title="Demo Titanic",
+        page_title="Music Genre Prediction",
         page_icon=image,
 
     )
 
     st.write(
         """
-        # Классификация пассажиров титаника
-        Определяем, кто из пассажиров выживет, а кто – нет.
+        # Классификация музыкальных жанров произведения
+        Определяем, музычку, если вы ее опишете.
         """
     )
 
@@ -60,39 +60,30 @@ def process_side_bar_inputs():
 
 
 def sidebar_input_features():
-    sex = st.sidebar.selectbox("Пол", ("Мужской", "Женский"))
-    embarked = st.sidebar.selectbox("Порт посадки", (
-    "Шербур-Октевиль", "Квинстаун", "Саутгемптон"))
-    pclass = st.sidebar.selectbox("Класс", ("Первый", "Второй", "Третий"))
+    key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "D", "E", "F", "G", "H", "A#", "B#", "C#", "D#", "E#", "F#", "G#"))
+    mode = st.sidebar.selectbox("Mode", ("Minor", "Major"))
+    
+    acousticness = st.sidebar.slider("acousticness", min_value=0, max_value=1, value=0.20, step=0.1)
+    danceability = st.sidebar.slider("danceability", min_value=0, max_value=1, value=0.20, step=0.1)
+    duration_ms = st.sidebar.slider("duration_ms", min_value=0, max_value=1, value=0.20, step=0.1)
+    energy = st.sidebar.slider("energy", min_value=0, max_value=1, value=0.20, step=0.1)
+    instrumentalness = st.sidebar.slider("instrumentalness", min_value=0, max_value=1, value=0.20, step=0.1)
+    liveness = st.sidebar.slider("liveness", min_value=0, max_value=1, value=0.20, step=0.1)
+    loudness = st.sidebar.slider("loudness", min_value=0, max_value=1, value=0.20, step=0.1)
+    tempo = st.sidebar.slider("tempo", min_value=0, max_value=1, value=0.20, step=0.1)
 
-    age = st.sidebar.slider("Возраст", min_value=1, max_value=80, value=20,
-                            step=1)
-
-    sib_sp = st.sidebar.slider(
-        "Количетсво ваших братьев / сестер / супругов на борту",
-        min_value=0, max_value=10, value=0, step=1)
-
-    par_ch = st.sidebar.slider("Количетсво ваших детей / родителей на борту",
-                               min_value=0, max_value=10, value=0, step=1)
-
-    translatetion = {
-        "Мужской": "male",
-        "Женский": "female",
-        "Шербур-Октевиль": "C",
-        "Квинстаун": "Q",
-        "Саутгемптон": "S",
-        "Первый": 1,
-        "Второй": 2,
-        "Третий": 3,
-    }
-
+     
     data = {
-        "Pclass": translatetion[pclass],
-        "Sex": translatetion[sex],
-        "Age": age,
-        "SibSp": sib_sp,
-        "Parch": par_ch,
-        "Embarked": translatetion[embarked]
+        "key": key,
+        "mode": mode,
+        "acousticness": acousticness,
+        "danceability": danceability,
+        "duration_ms": duration_ms,
+        "energy": energy,
+        "instrumentalness": instrumentalness,
+        "liveness": liveness,
+        "loudness": loudness,
+        "tempo": tempo
     }
 
     df = pd.DataFrame(data, index=[0])
