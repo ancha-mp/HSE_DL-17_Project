@@ -10,7 +10,7 @@ def process_main_page():
 
 
 def show_main_page():
-    image = Image.open('data/music.jpg')
+    image = Image.open('data/music2.jpg')
 
     st.set_page_config(
         layout="wide",
