@@ -29,7 +29,7 @@ def preprocess_data(df: pd.DataFrame, test=True):
         return df
         
   
-def fit_and_save_model(X_df, y_df, path="data/model_weights.mw"):
+def fit_and_save_model(X_df, y_df, path="data/model_weights.cbm"):
     model = CatBoostClassifier(verbose=0)
     model.fit(X_df, y_df)
 
