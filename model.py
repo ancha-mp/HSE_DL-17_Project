@@ -23,12 +23,14 @@ def preprocess_data(df: pd.DataFrame, test=True):
 
     if test:
         X_df, y_df = split_data(df)
+        return X_df, y_df
     else:
         X_df = df
-
-    
+        return df
+        
+  
 def fit_and_save_model(X_df, y_df, path="data/model_weights.mw"):
-    model = CatBoostClassifier()
+    model = CatBoostClassifier(verbose=0)
     model.fit(X_df, y_df)
 
     test_prediction = model.predict(X_df)
