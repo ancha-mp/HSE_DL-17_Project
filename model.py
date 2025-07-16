@@ -1,4 +1,4 @@
-from sklearn.ensemble import RandomForestClassifier
+from catboost import CatBoostClassifier
 from sklearn.metrics import accuracy_score
 from pickle import dump, load
 import pandas as pd
@@ -6,14 +6,14 @@ import pandas as pd
 
 def split_data(df: pd.DataFrame):
     y = df['music_genre']
-    X = df[["key", "mode", "acousticness", "danceability", "duration_ms", "energy", "instrumentalness", "liveness", "loudness", "tempo"]]
+    X = df[["key", "mode", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "tempo", "speechiness"]]
 
     return X, y
 
 
-def open_data(path="data/titanic_dataset_train.csv"):
+def open_data(path="data/music_genre_train.csv"):
     df = pd.read_csv(path)
-    df = df[['Survived', "Pclass", "Sex", "Age", "SibSp", "Parch", "Embarked"]]
+    df = df[['music_genre', "key", "mode", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "tempo", "speechiness"]]
 
     return df
 
@@ -26,20 +26,9 @@ def preprocess_data(df: pd.DataFrame, test=True):
     else:
         X_df = df
 
-    to_encode = ['Sex', 'Embarked']
-    for col in to_encode:
-        dummy = pd.get_dummies(X_df[col], prefix=col)
-        X_df = pd.concat([X_df, dummy], axis=1)
-        X_df.drop(col, axis=1, inplace=True)
-
-    if test:
-        return X_df, y_df
-    else:
-        return X_df
-
-
+    
 def fit_and_save_model(X_df, y_df, path="data/model_weights.mw"):
-    model = RandomForestClassifier()
+    model = CatBoostClassifier()
     model.fit(X_df, y_df)
 
     test_prediction = model.predict(X_df)
