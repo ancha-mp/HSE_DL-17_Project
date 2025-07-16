@@ -25,7 +25,6 @@ def preprocess_data(df: pd.DataFrame, test=True):
         X_df, y_df = split_data(df)
         return X_df, y_df
     else:
-        X_df = df
         return df
         
   
@@ -34,12 +33,10 @@ def fit_and_save_model(X_df, y_df, path="data/model_weights.cbm"):
     model.fit(X_df, y_df)
 
     test_prediction = model.predict(X_df)
-    accuracy = accuracy_score(test_prediction, y_df)
+    accuracy = accuracy_score(y_df, test_prediction)
     print(f"Model accuracy is {accuracy}")
 
-    with open(path, "wb") as file:
-        dump(model, file)
-
+    model.save_model(path)
     print(f"Model was saved to {path}")
 
 
@@ -48,11 +45,8 @@ def load_model_and_predict(df, path="data/model_weights.cbm"):
     model.load_model(path)
 
     prediction = model.predict(df)[0]
-    # prediction = np.squeeze(prediction)
-
     prediction_proba = model.predict_proba(df)[0]
-    # prediction_proba = np.squeeze(prediction_proba)
-
+    
     encode_prediction_proba = {
         0: "Вам не повезло с вероятностью",
         1: "Вы выживете с вероятностью"
@@ -63,15 +57,11 @@ def load_model_and_predict(df, path="data/model_weights.cbm"):
         1: "Ура! Вы будете жить"
     }
 
-    prediction_data = {}
-    for key, value in encode_prediction_proba.items():
-        prediction_data.update({value: prediction_proba[key]})
-
+    prediction_data = {encode_prediction_proba[k]: prediction_proba[k] for k in encode_prediction_proba}
     prediction_df = pd.DataFrame(prediction_data, index=[0])
-    prediction = encode_prediction[prediction]
+    prediction_label = encode_prediction.get(prediction, "Неизвестный класс")
 
-    return prediction, prediction_df
-
+    return prediction_label, prediction_df
 
 if __name__ == "__main__":
     df = open_data()
