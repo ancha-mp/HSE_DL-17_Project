@@ -43,7 +43,7 @@ def fit_and_save_model(X_df, y_df, path="data/model_weights.mw"):
     print(f"Model was saved to {path}")
 
 
-def load_model_and_predict(df, path="data/model_weights.mw"):
+def load_model_and_predict(df, path="data/model_weights.cbm"):
     with open(path, "rb") as file:
         model = load(file)
 
