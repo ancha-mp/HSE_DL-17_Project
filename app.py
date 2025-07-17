@@ -77,7 +77,6 @@ def sidebar_input_features():
         "loudness": loudness,
         "speechiness": speechiness,
         "tempo": tempo
-        
     }
 
     df = pd.DataFrame(data, index=[0])
