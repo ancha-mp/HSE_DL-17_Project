@@ -43,8 +43,8 @@ def sidebar_input_features():
     instrumentalness = st.sidebar.slider("instrumentalness", 0.0, 1.0, 0.2, 0.01)
     liveness = st.sidebar.slider("liveness", 0.0, 1.0, 0.2, 0.01)
     loudness = st.sidebar.slider("loudness", -100.0, 20.0, -10.0, 1.0)
-    speechiness = st.sidebar.slider("speechiness", 0.0, 1.0, 0.2, 0.01)
     tempo = st.sidebar.slider("tempo", 0.0, 300.0, 120.0, 1.0)
+    speechiness = st.sidebar.slider("speechiness", 0.0, 1.0, 0.2, 0.01)
     
     data = {
         "key": key,
