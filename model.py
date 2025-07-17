@@ -7,7 +7,8 @@ CATEGORICAL_FEATURES = ["key", "mode"]
 
 def split_data(df: pd.DataFrame):
     y = df["music_genre"]
-    X = df.drop("music_genre", axis=1)
+    X = df[["key", "mode", "acousticness", "danceability", "energy",
+        "instrumentalness", "liveness", "loudness", "tempo", "speechiness"]]
     return X, y
 
 def open_data(path="data/music_genre_train.csv"):
