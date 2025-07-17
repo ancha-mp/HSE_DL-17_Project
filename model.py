@@ -1,4 +1,3 @@
-%%capture
 !pip install catboost -q
 
 from catboost import CatBoostClassifier
