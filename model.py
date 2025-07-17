@@ -23,12 +23,24 @@ def preprocess_data(df: pd.DataFrame, test=True):
     # Убедимся, что категориальные -- str
     for col in CATEGORICAL_FEATURES:
         df[col] = df[col].astype(str)
+    
     df = df.dropna().reset_index(drop=True)
-    if test:
+    
+    if test and "music_genre" in df.columns:
         X_df, y_df = split_data(df)
         return X_df, y_df
     else:
-        return df
+        # В тестовом режиме возвращаем DataFrame с только признаками
+        expect_cols = [
+            "key", "mode", "acousticness", "danceability", "energy",
+            "instrumentalness", "liveness", "loudness", "tempo", "speechiness"
+        ]
+        # Сохраняем только нужные признаки в правильном порядке
+        return df[expect_cols]
+
+
+
+
 
 def fit_and_save_model(X_df, y_df, path="data/model_weights.cbm"):
     model = CatBoostClassifier(
