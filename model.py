@@ -25,20 +25,20 @@ def open_data(path="data/music_genre_train.csv"):
     return df
 
 def preprocess_data(df: pd.DataFrame, test=True):
-    # Убедимся, что категориальные -- str
-    #for col in CATEGORICAL_FEATURES:
-    #    df[col] = df[col].astype(str)
-    
+       # Привести категориальные к строкам
+    for col in CATEGORICAL_FEATURES:
+        df[col] = df[col].astype(str)
+    # Привести числовые к float
+    for col in NUM_FEATURES:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+    # Оставить только нужные столбцы В ТОЧНОМ ПОРЯДКЕ
+    df = df[ALL_FEATURES]
     df = df.dropna().reset_index(drop=True)
-    
     if test and "music_genre" in df.columns:
         X_df, y_df = split_data(df)
-        
+        return X_df, y_df
     else:
-       X_df = df
-      
-    return X_df
-
+        return df
 
 def fit_and_save_model(X_df, y_df, path="data/model_weights.cbm"):
     model = CatBoostClassifier(
