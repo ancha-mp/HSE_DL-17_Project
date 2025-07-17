@@ -3,6 +3,9 @@ import streamlit as st
 from PIL import Image
 from model import open_data, preprocess_data, split_data, load_model_and_predict
 
+def process_main_page():
+    show_main_page()
+    process_side_bar_inputs()
 
 def show_main_page():
     image = Image.open('data/music2.jpg')
@@ -10,12 +13,18 @@ def show_main_page():
     st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto",
-    page_title="Классификация музыкальных жанров произведения",
+    page_title="Music Genre Classifier",
     page_icon=image
     )
     
-    st.write("Определяем музыку, если вы её опишете.")
+    st.write(
+        """
+        # Классификация музыкальных жанров произведения
+        Определяем музыку, если вы её опишете.
+        """
+    )
 
+    st.image(image)
 def write_user_data(df):
     st.write("## Ваши данные")
     st.dataframe(df)
