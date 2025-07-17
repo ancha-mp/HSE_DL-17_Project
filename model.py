@@ -1,3 +1,6 @@
+%%capture
+!pip install catboost -q
+
 from catboost import CatBoostClassifier
 from sklearn.metrics import accuracy_score
 from pickle import dump, load
