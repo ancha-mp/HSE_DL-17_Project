@@ -46,13 +46,12 @@ def fit_and_save_model(X_df, y_df, path="data/model_weights.cbm"):
 def load_model_and_predict(df, path="data/model_weights.cbm"):
     model = CatBoostClassifier()
     model.load_model(path)
-    # Категориальные передаем явно
-    prediction = model.predict(df, cat_features=CATEGORICAL_FEATURES)[0]
-    probas = model.predict_proba(df, cat_features=CATEGORICAL_FEATURES)[0]
+    prediction = model.predict(df)[0]
+    probas = model.predict_proba(df)[0]
     classes = model.classes_
     prediction_probas = {cls: prob for cls, prob in zip(classes, probas)}
     return prediction, prediction_probas
-
+    
 # Скрипт для обучения!
 if __name__ == "__main__":
     df = open_data()
