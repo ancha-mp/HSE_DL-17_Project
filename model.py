@@ -18,6 +18,7 @@ def open_data(path="data/music_genre_train.csv"):
         "instrumentalness", "liveness", "loudness", "tempo", "speechiness", "music_genre"
     ]
     df = df[cols]
+    df = df.dropna().reset_index(drop=True)
     return df
 
 def preprocess_data(df: pd.DataFrame, test=True):
