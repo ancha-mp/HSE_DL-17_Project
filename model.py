@@ -29,7 +29,7 @@ def preprocess_data(df: pd.DataFrame, test=True):
     for col in CATEGORICAL_FEATURES:
         df[col] = df[col].astype(str)
     
-    df = df.dropna().reset_index(drop=Tru.e)
+    df = df.dropna().reset_index(drop=True)
     
     if test and "music_genre" in df.columns:
         X_df, y_df = split_data(df)
