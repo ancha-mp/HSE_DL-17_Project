@@ -26,8 +26,8 @@ def open_data(path="data/music_genre_train.csv"):
 
 def preprocess_data(df: pd.DataFrame, test=True):
     # Убедимся, что категориальные -- str
-    for col in CATEGORICAL_FEATURES:
-        df[col] = df[col].astype(str)
+    #for col in CATEGORICAL_FEATURES:
+    #    df[col] = df[col].astype(str)
     
     df = df.dropna().reset_index(drop=True)
     
