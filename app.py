@@ -3,11 +3,9 @@ import streamlit as st
 from PIL import Image
 from model import open_data, preprocess_data, split_data, load_model_and_predict
 
-
 def process_main_page():
     show_main_page()
     process_side_bar_inputs()
-
 
 def show_main_page():
     image = Image.open('data/music2.jpg')
@@ -29,19 +27,16 @@ def show_main_page():
 
     st.image(image)
 
-
 def write_user_data(df):
     st.write("## Ваши данные")
     st.write(df)
 
+#def write_prediction(prediction, prediction_probas):
+#    st.write("## Предсказание")
+#    st.write(prediction)
 
-def write_prediction(prediction, prediction_probas):
-    st.write("## Предсказание")
-    st.write(prediction)
-
-    st.write("## Вероятность предсказания")
-    st.write(prediction_probas)
-
+#    st.write("## Вероятность предсказания")
+#    st.write(prediction_probas)
 
 def process_side_bar_inputs():
     st.sidebar.header('Заданные пользователем параметры')
@@ -60,12 +55,11 @@ def process_side_bar_inputs():
 
 
 def sidebar_input_features():
-    key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "D", "E", "F", "G", "H", "A#", "B#", "C#", "D#", "E#", "F#", "G#"))
+    key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "E", "F", "G", "A#", "C#", "G#"))
     mode = st.sidebar.selectbox("Mode", ("Minor", "Major"))
     
     acousticness = st.sidebar.slider("acousticness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     danceability = st.sidebar.slider("danceability", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    #duration_ms = st.sidebar.slider("duration_ms", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     energy = st.sidebar.slider("energy", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     instrumentalness = st.sidebar.slider("instrumentalness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     liveness = st.sidebar.slider("liveness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
@@ -78,7 +72,6 @@ def sidebar_input_features():
         "mode": mode,
         "acousticness": acousticness,
         "danceability": danceability,
-        #"duration_ms": duration_ms,
         "energy": energy,
         "instrumentalness": instrumentalness,
         "liveness": liveness,
