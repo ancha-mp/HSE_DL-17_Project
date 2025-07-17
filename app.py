@@ -1,15 +1,14 @@
-st.set_page_config(
-    layout="wide",
-    initial_sidebar_state="auto",
-    page_title="Music Genre Prediction",
-    page_icon="🎵"
-)
-
 def show_main_page():
     image = Image.open('data/music2.jpg')
-    st.title("Классификация музыкальных жанров произведения")
+
+    st.set_page_config(
+    layout="wide",
+    initial_sidebar_state="auto",
+    page_title="Классификация музыкальных жанров произведения",
+    page_icon=image
+    )
+    
     st.write("Определяем музыку, если вы её опишете.")
-    st.image(image, use_column_width=True)
 
 def write_user_data(df):
     st.write("## Ваши данные")
