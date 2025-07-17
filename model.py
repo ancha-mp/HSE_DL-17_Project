@@ -14,7 +14,7 @@ def split_data(df: pd.DataFrame):
 
 
 def open_data(path="data/music_genre_train.csv"):
-    df = train
+    df = pd.read_csv(path)
     cols = [
         "key", "mode", "acousticness", "danceability", "energy",
         "instrumentalness", "liveness", "loudness", "tempo", "speechiness", "music_genre"
