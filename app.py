@@ -3,10 +3,6 @@ import streamlit as st
 from PIL import Image
 from model import open_data, preprocess_data, split_data, load_model_and_predict
 
-def process_main_page():
-    show_main_page()
-    process_side_bar_inputs()
-
 def show_main_page():
     image = Image.open('data/music2.jpg')
 
