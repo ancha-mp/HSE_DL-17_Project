@@ -1,70 +1,40 @@
-import pandas as pd
-import streamlit as st
-from PIL import Image
-from model import open_data, preprocess_data, split_data, load_model_and_predict
-
-def process_main_page():
-    show_main_page()
-    process_side_bar_inputs()
+st.set_page_config(
+    layout="wide",
+    initial_sidebar_state="auto",
+    page_title="Music Genre Prediction",
+    page_icon="🎵"
+)
 
 def show_main_page():
     image = Image.open('data/music2.jpg')
-
-    st.set_page_config(
-        layout="wide",
-        initial_sidebar_state="auto",
-        page_title="Music Genre Prediction",
-        page_icon=image,
-
-    )
-
-    st.write(
-        """
-        # Классификация музыкальных жанров произведения
-        Определяем, музычку, если вы ее опишете.
-        """
-    )
-
-    st.image(image)
+    st.title("Классификация музыкальных жанров произведения")
+    st.write("Определяем музыку, если вы её опишете.")
+    st.image(image, use_column_width=True)
 
 def write_user_data(df):
     st.write("## Ваши данные")
-    st.write(df)
+    st.dataframe(df)
 
 def write_prediction(prediction, prediction_probas):
     st.write("## Предсказание")
     st.write(prediction)
 
-    st.write("## Вероятность предсказания")
-    st.write(prediction_probas)
-
-def process_side_bar_inputs():
-    st.sidebar.header('Заданные пользователем параметры')
-    user_input_df = sidebar_input_features()
-
-    train_df = open_data()
-    train_X_df, _ = split_data(train_df)
-    full_X_df = pd.concat((user_input_df, train_X_df), axis=0)
-    preprocessed_X_df = preprocess_data(full_X_df, test=False)
-
-    user_X_df = preprocessed_X_df[:1]
-    write_user_data(user_X_df)
-
-    prediction, prediction_probas = load_model_and_predict(user_X_df)
-    write_prediction(prediction, prediction_probas)
+    st.write("## Вероятности по классам")
+    for genre, prob in prediction_probas.items():
+        st.write(f"{genre}: {prob:.3f}")
 
 def sidebar_input_features():
-    key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "E", "F", "G", "A#", "C#", "G#"))
+    st.sidebar.header('Заданные пользователем параметры')
+    key = st.sidebar.selectbox("Тональность", ("A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"))
     mode = st.sidebar.selectbox("Mode", ("Minor", "Major"))
-    
-    acousticness = st.sidebar.slider("acousticness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    danceability = st.sidebar.slider("danceability", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    energy = st.sidebar.slider("energy", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    instrumentalness = st.sidebar.slider("instrumentalness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    liveness = st.sidebar.slider("liveness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    loudness = st.sidebar.slider("loudness", min_value=-100.0, max_value=20.0, value=-10.0, step=10.0)
-    speechiness = st.sidebar.slider("speechiness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    tempo = st.sidebar.slider("tempo", min_value=0.0, max_value=300.0, value=120.0, step=10.0)
+    acousticness = st.sidebar.slider("acousticness", 0.0, 1.0, 0.2, 0.01)
+    danceability = st.sidebar.slider("danceability", 0.0, 1.0, 0.2, 0.01)
+    energy = st.sidebar.slider("energy", 0.0, 1.0, 0.2, 0.01)
+    instrumentalness = st.sidebar.slider("instrumentalness", 0.0, 1.0, 0.2, 0.01)
+    liveness = st.sidebar.slider("liveness", 0.0, 1.0, 0.2, 0.01)
+    loudness = st.sidebar.slider("loudness", -100.0, 20.0, -10.0, 1.0)
+    speechiness = st.sidebar.slider("speechiness", 0.0, 1.0, 0.2, 0.01)
+    tempo = st.sidebar.slider("tempo", 0.0, 300.0, 120.0, 1.0)
     
     data = {
         "key": key,
@@ -75,14 +45,27 @@ def sidebar_input_features():
         "instrumentalness": instrumentalness,
         "liveness": liveness,
         "loudness": loudness,
-        "speechiness": speechiness,
-        "tempo": tempo
+        "tempo": tempo,
+        "speechiness": speechiness
     }
-
-    df = pd.DataFrame(data, index=[0])
-
+    df = pd.DataFrame([data])
     return df
 
+def main():
+    show_main_page()
+    user_input_df = sidebar_input_features()
+    train_df = open_data()
+    train_X_df, _ = split_data(train_df)
+
+    # Конкатенируем, чтобы корректно обработать категориальные фичи
+    full_X_df = pd.concat([user_input_df, train_X_df], axis=0, ignore_index=True)
+    preprocessed_X_df = preprocess_data(full_X_df, test=False)
+
+    user_X_df = preprocessed_X_df.iloc[[0]]
+    write_user_data(user_X_df)
+
+    prediction, prediction_probas = load_model_and_predict(user_X_df)
+    write_prediction(prediction, prediction_probas)
 
 if __name__ == "__main__":
-    process_main_page()
+    main()
