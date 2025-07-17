@@ -31,12 +31,12 @@ def write_user_data(df):
     st.write("## Ваши данные")
     st.write(df)
 
-#def write_prediction(prediction, prediction_probas):
-#    st.write("## Предсказание")
-#    st.write(prediction)
+def write_prediction(prediction, prediction_probas):
+    st.write("## Предсказание")
+    st.write(prediction)
 
-#    st.write("## Вероятность предсказания")
-#    st.write(prediction_probas)
+    st.write("## Вероятность предсказания")
+    st.write(prediction_probas)
 
 def process_side_bar_inputs():
     st.sidebar.header('Заданные пользователем параметры')
@@ -52,7 +52,6 @@ def process_side_bar_inputs():
 
     prediction, prediction_probas = load_model_and_predict(user_X_df)
     write_prediction(prediction, prediction_probas)
-
 
 def sidebar_input_features():
     key = st.sidebar.selectbox("Тональность", ("A", "B", "C", "E", "F", "G", "A#", "C#", "G#"))
