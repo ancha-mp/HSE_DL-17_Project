@@ -63,10 +63,10 @@ def sidebar_input_features():
     energy = st.sidebar.slider("energy", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     instrumentalness = st.sidebar.slider("instrumentalness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
     liveness = st.sidebar.slider("liveness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    loudness = st.sidebar.slider("loudness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-    tempo = st.sidebar.slider("tempo", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+    loudness = st.sidebar.slider("loudness", min_value=-100.0, max_value=20.0, value=-10.0, step=10.0)
     speechiness = st.sidebar.slider("speechiness", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
-        
+    tempo = st.sidebar.slider("tempo", min_value=0.0, max_value=300.0, value=120.0, step=10.0)
+    
     data = {
         "key": key,
         "mode": mode,
@@ -76,8 +76,9 @@ def sidebar_input_features():
         "instrumentalness": instrumentalness,
         "liveness": liveness,
         "loudness": loudness,
-        "tempo": tempo,
-        "speechiness": speechiness
+        "speechiness": speechiness,
+        "tempo": tempo
+        
     }
 
     df = pd.DataFrame(data, index=[0])
